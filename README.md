@@ -32,14 +32,6 @@
 
 手册缺失或无文字层时自动降级为空，不影响主流程。
 
-### 预算与时限
-
-赛题规定超时或超工具调用次数即当前 case 0 分，因此时限是流程的一等公民：
-
-- 内部截止 = wall time × 0.90，留给产物整理；解析不到预算时按保守默认值兜底而不是「无上限」
-- 预运行窗口 = min(预算 × 0.92, 上限, 预算 × 0.90 − 工具保留量)，工具保留量按网表体积分档（15 / 60 / 90 s）
-- 每轮结束增量落盘 + 交付断言，异常路径也保证有可评分产物
-- `.case_complete_marker` 放在 `finally` 中无条件写出：不写会被判超时，写早了要能被交付断言发现缺件
 
 ## 架构
 
@@ -122,17 +114,6 @@ submission/
   .case_complete_marker
 ```
 
-`decision_log.json` 的字段按赛题 schema 分任务对齐：
-
-| 字段 | 内容 |
-| --- | --- |
-| `case_id` / `task` / `final_run` / `summary` | 基本标识与结论摘要 |
-| `requirement_mapping` | 任务一：需求项 → 实际命令 → `final.dofile` 真实行号 `locator` |
-| `issue_resolutions` | 问题现象、证据出处、修复动作、是否闭环 |
-| `tool_runs` | 每轮工具调用、日志路径、退出状态 |
-| `file_changes` | 改动路径与 diff；任务二额外带 `type` 与 `lec_ref` |
-
-原则是**不伪造**：工具没有导出的文件不补、改名不合法产物，缺件由交付断言报出并记为 incomplete。
 
 ## 配置
 
@@ -171,21 +152,10 @@ SCAN_AGENT_WAIT_READY=0 python3 -m scan_agent \
 
 依赖 Python 3、`openai`、`pypdf`；外部工具为 `dftexp_scan`（广立微 Scan 引擎）与 oss-cad-suite 中的 `yosys` / `eqy` / `btormc`。
 
-## 关键取舍
 
-以下数值都来自平台实测，不是估计值：
-
-| 项 | 结论 | 依据 |
-| --- | --- | --- |
-| 思考模式 | 默认关闭 | 同一 prompt 开思考 260 s、reasoning 16451 tokens；关闭后降到秒级 |
-| 预运行窗口 | 120 s（150 s 预算） | 单次生成调用实测 48 / 80 / 107 s，平台侧 78~148 s |
-| 工具保留量 | 按网表体积 15 / 60 / 90 s | 0.33 MB→2.3 s，232 MB→334 s，259 MB→718 s |
-| 最大轮数 | 6 → 3 | 90% 的收敛发生在前两轮，小网表 40~60 s/轮，大网表 300~400 s/轮 |
-| 参考答案 | 不读 `golden.dofile` / `preset_issues.json` | hidden case 不提供，依赖它等于评测时失效 |
-| 网表改动 | 必须过 LEC，否则回滚 | 破坏功能等价性的代价高于放弃一次修复 |
 
 ## 评测记录
 
-平台第 20 次测试：12 / 12 case 通过，总运行时长 1114.9 s（目标 ≤ 1200 s）。
+平台第 24 次测试：12 / 12 case 通过
 
 感谢队友涂世恒https://github.com/wdcaswcx 和王焕丽https://github.com/Learntheking，以及赛题举办方中国学位与研究生教育学会和赛题公司杭州广立微电子股份有限公司
