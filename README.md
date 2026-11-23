@@ -188,7 +188,4 @@ SCAN_AGENT_WAIT_READY=0 python3 -m scan_agent \
 
 平台第 20 次测试：12 / 12 case 通过，总运行时长 1114.9 s（目标 ≤ 1200 s）。
 
-## 相关仓库
 
-- [can-node](https://github.com/Dik-910/can-node) —— 车载 CAN 节点固件，STM32 上的 CAN 收发、UDS 诊断与双区 Bootloader
-- [smartgateway](https://github.com/Dik-910/smartgateway) —— Linux 网关端
