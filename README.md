@@ -188,4 +188,4 @@ SCAN_AGENT_WAIT_READY=0 python3 -m scan_agent \
 
 平台第 20 次测试：12 / 12 case 通过，总运行时长 1114.9 s（目标 ≤ 1200 s）。
 
-
+感谢队友涂世恒https://github.com/wdcaswcx 和王焕丽https://github.com/Learntheking，以及赛题举办方中国学位与研究生教育学会和赛题公司杭州广立微电子股份有限公司
