@@ -158,4 +158,5 @@ SCAN_AGENT_WAIT_READY=0 python3 -m scan_agent \
 
 平台第 24 次测试：12 / 12 case 通过
 
-感谢队友涂世恒https://github.com/wdcaswcx 和王焕丽https://github.com/Learntheking，以及赛题举办方中国学位与研究生教育学会和赛题公司杭州广立微电子股份有限公司
+感谢队友涂世恒https://github.com/wdcaswcx 和王焕丽https://github.com/Learntheking
+以及赛题举办方中国学位与研究生教育学会和赛题公司杭州广立微电子股份有限公司
